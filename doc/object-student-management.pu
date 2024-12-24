@@ -35,32 +35,62 @@ rectangle {
     }
 }
 
-object "生徒" as Student1 {
-    生徒ID: "UUIDS1"
-    名前: "花子 その１"
-    メールアドレス: "hanako1@gmail.com"
-    在籍状況: "在籍中"
+
+rectangle {
+    object "生徒" as Student1 {
+        生徒ID: "UUIDS1"
+        名前: "花子 その１"
+        メールアドレス: "hanako1@gmail.com"
+    }
+
+    object "生徒の状態" as StudentStatus1 {
+        在籍状況: "在籍中"
+    }
+
+    Student1 *-- StudentStatus1
 }
 
-object "生徒" as Student2 {
-    生徒ID: "UUIDS2"
-    名前: "花子 その2"
-    メールアドレス: "hanako2@gmail.com"
-    在籍状況: "在籍中"
+rectangle {
+    object "生徒" as Student2 {
+        生徒ID: "UUIDS2"
+        名前: "花子 その2"
+        メールアドレス: "hanako2@gmail.com"
+        在籍状況: "在籍中"
+    }
+
+    object "生徒の状態" as StudentStatus2 {
+        在籍状況: "在籍中"
+    }
+
+    Student2 *-- StudentStatus2
 }
 
-object "生徒" as Student3 {
-    生徒ID: "UUIDS3"
-    名前: "花子 その3"
-    メールアドレス: "hanako3@gmail.com"
-    在籍状況: "在籍中"
+rectangle {
+    object "生徒" as Student3 {
+        生徒ID: "UUIDS3"
+        名前: "花子 その3"
+        メールアドレス: "hanako3@gmail.com"
+    }
+
+    object "生徒の状態" as StudentStatus3 {
+        在籍状況: "在籍中"
+    }
+
+    Student3 *-- StudentStatus3
 }
 
-object "生徒" as Student4 {
-    生徒ID: "UUIDS4"
-    名前: "花子 その4"
-    メールアドレス: "hanako4@gmail.com"
-    在籍状況: "在籍中"
+rectangle {
+    object "生徒" as Student4 {
+        生徒ID: "UUIDS4"
+        名前: "花子 その4"
+        メールアドレス: "hanako4@gmail.com"
+    }
+
+    object "生徒の状態" as StudentStatus4 {
+        在籍状況: "在籍中"
+    }
+
+    Student4 *-- StudentStatus4
 }
 
 TeamA -down-> Student1
@@ -77,36 +107,65 @@ rectangle {
     }
 }
 
-object "生徒" as Student5 {
-    生徒ID: "UUIDS5"
-    名前: "花子 その5"
-    メールアドレス: "hanako5@gmail.com"
-    在籍状況: "在籍中"
+rectangle {
+    object "生徒" as Student5 {
+        生徒ID: "UUIDS5"
+        名前: "花子 その5"
+        メールアドレス: "hanako5@gmail.com"
+        在籍状況: "在籍中"
+    }
+
+    object "生徒の状態" as StudentStatus5 {
+        在籍状況: "在籍中"
+    }
+
+    Student5 *-- StudentStatus5
 }
 
-object "生徒" as Student6 {
-    生徒ID: "UUIDS6"
-    名前: "花子 その6"
-    メールアドレス: "hanako6@gmail.com"
-    在籍状況: "在籍中"
+rectangle {
+    object "生徒" as Student6 {
+        生徒ID: "UUIDS6"
+        名前: "花子 その6"
+        メールアドレス: "hanako6@gmail.com"
+    }
+
+    object "生徒の状態" as StudentStatus6 {
+        在籍状況: "在籍中"
+    }
+
+    Student6 *-- StudentStatus6
 }
 
 TeamB -down-> Student5
 TeamB -down-> Student6
 
 rectangle {
-    object "生徒" as Student7 {
-        生徒ID: "UUIDS7"
-        名前: "花子 その7"
-        メールアドレス: "hanako7@gmail.com"
-        在籍状況: "退会済"
+    rectangle {
+        object "生徒" as Student7 {
+            生徒ID: "UUIDS7"
+            名前: "花子 その7"
+            メールアドレス: "hanako7@gmail.com"
+        }
+
+        object "生徒の状態" as StudentStatus7 {
+            在籍状況: "退会済"
+        }
+
+        Student7 *-- StudentStatus7
     }
 
-    object "生徒" as Student8 {
-        生徒ID: "UUIDS8"
-        名前: "花子 その8"
-        メールアドレス: "hanako8@gmail.com"
-        在籍状況: "休会中"
+    rectangle {
+        object "生徒" as Student8 {
+            生徒ID: "UUIDS8"
+            名前: "花子 その8"
+            メールアドレス: "hanako8@gmail.com"
+        }
+
+        object "生徒の状態" as StudentStatus8 {
+            在籍状況: "休会中"
+        }
+
+        Student8 *-- StudentStatus8
     }
 }
 
