@@ -1,5 +1,5 @@
-import { Student } from "../../Student/Student";
-import { StudentRepositoryInterface } from "../../Student/Student-repository";
+import { Student } from "../../aaa/student";
+import { StudentRepositoryInterface } from "../../aaa/student-repository";
 import { Team } from "../../team/team";
 import type { TeamRepositoryInterface } from "../../team/team-repository";
 

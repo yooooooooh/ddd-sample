@@ -1,9 +1,9 @@
 import { eq } from "drizzle-orm";
-import { StudentStatus } from "../../domain/student/student-status";
+import { StudentStatus } from "../../domain/aaa/student-status";
 import type { Database } from "../../libs/drizzle/get-database";
 import { students } from "../../libs/drizzle/schema";
-import { Student } from "../../domain/Student/Student";
-import { StudentRepositoryInterface } from "../../domain/Student/Student-repository";
+import { Student } from "../../domain/aaa/Student";
+import { StudentRepositoryInterface } from "../../domain/aaa/Student-repository";
 
 export class PostgresqlStudentRepository implements StudentRepositoryInterface {
   public constructor(private readonly database: Database) {}

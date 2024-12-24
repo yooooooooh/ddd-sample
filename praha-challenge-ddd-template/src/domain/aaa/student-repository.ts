@@ -1,4 +1,4 @@
-import { Student } from "./Student";
+import { Student } from "./student";
 
 export type StudentRepositoryInterface = {
   save: (Student: Student) => Promise<Student>;

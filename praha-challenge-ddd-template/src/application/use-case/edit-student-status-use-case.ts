@@ -1,5 +1,5 @@
-import type { StudentRepositoryInterface } from "../../domain/Student/Student-repository";
-import type { StudentStatusList } from "../../domain/student/student-status";
+import type { StudentRepositoryInterface } from "../../domain/aaa/student-repository";
+import type { StudentStatusList } from "../../domain/aaa/student-status";
 import { TeamEditor } from "../../domain/services/team-editor/team-editor";
 import type { TeamRepositoryInterface } from "../../domain/team/team-repository";
 

@@ -2,7 +2,9 @@ import { TaskContent } from "./task_content";
 import { TaskStatus, TaskStatusList } from "./task_status";
 
 export class Task {
+  #id: string;
   readonly #studentId: string;
+  // TODO: ここにコンテンツを入れる
   #taskContent: TaskContent;
   #taskStatus: TaskStatus;
 

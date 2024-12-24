@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { ulid } from "../../libs/ulid";
-import { StudentStatus, type StudentStatusList } from "./student-status";
+import { StudentStatus } from "./student-status";
 
 export class Student {
   readonly #id: string;
@@ -22,7 +22,7 @@ export class Student {
           id: string;
           name: string;
           mailAddress: string;
-          studentStatus: StudentStatus;
+          studentStatus: string;
         }
   ) {
     const fromData = "id" in props;
@@ -31,7 +31,7 @@ export class Student {
       this.#id = props.id;
       this.#name = props.name;
       this.#mailAddress = props.mailAddress;
-      this.#studentStatus = props.studentStatus;
+      this.#studentStatus = new StudentStatus(props.studentStatus);
     } else {
       this.#id = ulid();
       this.#name = this.nameSchema.parse(props.name);
