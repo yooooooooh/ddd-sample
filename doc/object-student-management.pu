@@ -30,30 +30,9 @@
 rectangle {
     object "チーム" as TeamA {
         チームID: "UUIDT1"
-        名前: "a"
+        チーム名: "a"
+        チームメンバー: ["UUIDS1", "UUIDS2", "UUIDS3", "UUIDS4"]
     }
-
-    object "メンバー" as TeamAMember1 {
-        チームID: "UUIDT1"
-        生徒ID: "UUIDS1"
-    }
-    object "メンバー" as TeamAMember2 {
-        チームID: "UUIDT1"
-        生徒ID: "UUIDS2"
-    }
-    object "メンバー" as TeamAMember3 {
-        チームID: "UUIDT1"
-        生徒ID: "UUIDS3"
-    }
-    object "メンバー" as TeamAMember4 {
-        チームID: "UUIDT1"
-        生徒ID: "UUIDS4"
-    }
-
-    TeamAMember1 -left-* TeamA
-    TeamAMember2 -left-* TeamA
-    TeamAMember3 -left-* TeamA
-    TeamAMember4 -left-* TeamA
 }
 
 object "生徒" as Student1 {
@@ -84,31 +63,19 @@ object "生徒" as Student4 {
     在籍状況: "在籍中"
 }
 
-TeamAMember1 -down-> Student1
-TeamAMember2 -down-> Student2
-TeamAMember3 -down-> Student3
-TeamAMember4 -down-> Student4
+TeamA -down-> Student1
+TeamA -down-> Student2
+TeamA -down-> Student3
+TeamA -down-> Student4
 
 
 rectangle {
     object "チーム" as TeamB {
         チームID: "UUIDT2"
-        名前: "b"
+        チーム名: "b"
+        チームメンバー: ["UUIDS5", "UUIDS6"]
     }
-    object "メンバー" as TeamBMember1 {
-        チームID: "UUIDT2"
-        生徒ID: "UUIDS5"
-    }
-    object "メンバー" as TeamBMember2 {
-        チームID: "UUIDT2"
-        生徒ID: "UUIDS6"
-    }
-
-    TeamBMember1 -left-* TeamB
-    TeamBMember2 -left-* TeamB
 }
-
-
 
 object "生徒" as Student5 {
     生徒ID: "UUIDS5"
@@ -124,24 +91,24 @@ object "生徒" as Student6 {
     在籍状況: "在籍中"
 }
 
-TeamBMember1 -down-> Student5
-TeamBMember2 -down-> Student6
-
+TeamB -down-> Student5
+TeamB -down-> Student6
 
 rectangle {
     object "生徒" as Student7 {
+        生徒ID: "UUIDS7"
         名前: "花子 その7"
         メールアドレス: "hanako7@gmail.com"
         在籍状況: "退会済"
     }
 
     object "生徒" as Student8 {
+        生徒ID: "UUIDS8"
         名前: "花子 その8"
         メールアドレス: "hanako8@gmail.com"
         在籍状況: "休会中"
     }
 }
-
 
 @enduml
 

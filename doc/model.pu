@@ -5,38 +5,31 @@ skinparam packageStyle rectangle
 ' 1. エンティティの定義
 package 生徒集約 {
     class "生徒(Student)" as Student << (R, Red) Entity >>  {
-        Id: StudentId
-        Name: 名前
-        MailAddress: メールアドレス
-        Status: 在関ステータス
+        生徒Id: string
+        名前: string
+        メールアドレス: string
+        在籍状態: string
     }
 }
 
 package チーム集約 {
-    class "チーム(Team)" as Team << (R,red) RootEntity >> {
-        Id: TeamId
-        Name: チーム名
-    }
-
-    class "チームメンバー" as TeamMember << (E, green) Entity >>  {
-        TeamId: TeamId
-        StudentId: StudentId
+    class "チーム(Team)" as Team << (R,red) Entity >> {
+        チームId: string
+        チーム名: string
+        チームメンバー: string[]
     }
 }
 
 package 課題集約 {
-    class "課題(Task)" as Task  << (R,red) RootEntity >> {
-        Id: TaskId
-        StudentId: StudentId
+    class "課題(Task)" as Task  << (R,red) Entity >> {
+        課題Id: string
+        生徒Id: string
+        タスクの状態: enum
     }
 
-    class "コンテンツ" as TaskContent << (E, green) Entity >>  {
-        Title: タイトル
-        Content: コンテンツ
-    }
-
-    class "状態" as TaskStatus << (E, green) Entity >>  {
-        Status: タスクの状態
+    class "課題のコンテンツ" as TaskContent << (E, green) ValueObject >>  {
+        課題のタイトル:string
+        課題のコンテンツ: string
     }
 }
 
@@ -70,9 +63,6 @@ end note
 ' 4. 関連性の定義
 Task "1..80" -left-> "0..n" Student
 Task "1" *--- "1" TaskContent
-Task "1" *--- "1" TaskStatus
-Student "0..n" <-left- "1" TeamMember
-Team "0..n" *-down- "1" TeamMember
-
+Student "0..n" <-left- "1" Team
 
 @enduml

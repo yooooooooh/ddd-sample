@@ -8,6 +8,7 @@ rectangle {
     object "課題1" as TaskActivity1 {
         ID: "UUIDT1"
         生徒ID: "UUIDS1"
+        状態: "取り組み中"
     }
 
     object "課題1のコンテンツ" as TaskContent1 {
@@ -15,16 +16,12 @@ rectangle {
         コンテンツ: "コンテンツ1"
     }
 
-    object "課題1の状態" as TaskStatus1 {
-        状態: "取り組み中"
-    }
-
     TaskActivity1 *-- TaskContent1
-    TaskActivity1 *-- TaskStatus1
 
     object "課題2" as TaskActivity2 {
         ID: "UUIDT2"
         生徒ID: "UUIDS1"
+        状態: "未着手"
     }
 
     object "課題2のコンテンツ" as TaskContent2 {
@@ -32,12 +29,7 @@ rectangle {
         コンテンツ: "コンテンツ2"
     }
 
-    object "課題2の状態" as TaskStatus2 {
-        状態: "未着手"
-    }
-
     TaskActivity2 *-- TaskContent2
-    TaskActivity2 *-- TaskStatus2
 }
 
 
