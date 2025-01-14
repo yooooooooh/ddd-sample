@@ -1,11 +1,10 @@
-import type { StudentRepositoryInterface } from "../../domain/aaa/student-repository";
-import type { StudentStatusList } from "../../domain/aaa/student-status";
+import type { StudentRepositoryInterface } from "../../domain/student/student-repository";
 import { TeamEditor } from "../../domain/services/team-editor/team-editor";
 import type { TeamRepositoryInterface } from "../../domain/team/team-repository";
 
 export type EditStudentStatusUseCaseInput = {
   StudentId: string;
-  status: StudentStatusList;
+  status: string;
 };
 
 export type EditStudentStatusUseCasePayload = {
@@ -39,35 +38,35 @@ export class EditStudentStatusUseCaseNotFoundError extends Error {
 //         - もし合流可能なチームがない場合は、その旨を管理者にメールして連絡する。その際メール文を見れば「どの参加者が減ったのか」「どの参加者が合流先を探しているのか」が分かるようにしてください
 export class EditStudentStatusUseCase {
   public constructor(
-    private readonly StudentRepository: StudentRepositoryInterface,
+    private readonly studentRepository: StudentRepositoryInterface,
     private readonly teamRepository: TeamRepositoryInterface
   ) {}
 
   public async invoke(
     input: EditStudentStatusUseCaseInput
   ): Promise<EditStudentStatusUseCasePayload> {
-    const Student = await this.StudentRepository.findById(input.StudentId);
+    const student = await this.studentRepository.findById(input.StudentId);
 
-    if (!Student) {
+    if (!student) {
       throw new EditStudentStatusUseCaseNotFoundError();
     }
 
     // inputのステータスが変わらない場合
-    if (input.status === Student.StudentStatus) {
+    if (input.status === student.enrollmentStatus) {
       throw new EditStudentStatusUseCaseNotFoundError();
     }
 
     // ステータスを設定
-    Student.setStatus(input.status);
+    student.setStatus(input.status);
 
     const teamCreator = new TeamEditor(
-      this.StudentRepository,
+      this.studentRepository,
       this.teamRepository
     );
 
     // 復帰する場合
-    return Student.canAssignTeam()
-      ? await teamCreator.create(Student)
-      : await teamCreator.reduceMember(Student);
+    return student.enrollmentStatus === "在籍中"
+      ? await teamCreator.create(student)
+      : await teamCreator.reduceMember(student);
   }
 }

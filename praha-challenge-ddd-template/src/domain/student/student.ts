@@ -1,12 +1,11 @@
 import { z } from "zod";
 import { ulid } from "../../libs/ulid";
-import { StudentStatus } from "./student-status";
 
 export class Student {
   readonly #id: string;
   readonly #name: string;
   readonly #mailAddress: string;
-  readonly #studentStatus: StudentStatus;
+  #enrollmentStatus: "在籍中" | "休会中" | "退会中";
 
   private readonly nameSchema = z
     .string()
@@ -15,6 +14,8 @@ export class Student {
 
   private readonly mailAddressSchema = z.string().email();
 
+  private readonly statusSchema = z.enum(["在籍中", "休会中", "退会中"]);
+
   public constructor(
     props:
       | { name: string; mailAddress: string }
@@ -22,7 +23,7 @@ export class Student {
           id: string;
           name: string;
           mailAddress: string;
-          studentStatus: string;
+          enrollmentStatus: string;
         }
   ) {
     const fromData = "id" in props;
@@ -31,12 +32,12 @@ export class Student {
       this.#id = props.id;
       this.#name = props.name;
       this.#mailAddress = props.mailAddress;
-      this.#studentStatus = new StudentStatus(props.studentStatus);
+      this.#enrollmentStatus = this.statusSchema.parse(props.enrollmentStatus);
     } else {
       this.#id = ulid();
       this.#name = this.nameSchema.parse(props.name);
       this.#mailAddress = this.mailAddressSchema.parse(props.mailAddress);
-      this.#studentStatus = new StudentStatus();
+      this.#enrollmentStatus = "在籍中";
     }
   }
 
@@ -52,15 +53,11 @@ export class Student {
     return this.#mailAddress;
   }
 
-  public get studentStatus() {
-    return this.#studentStatus.status;
+  public get enrollmentStatus() {
+    return this.#enrollmentStatus;
   }
 
-  public canAssignTeam() {
-    return this.#studentStatus.canTeamAssignTeam();
-  }
-
-  public setStatus(status: StudentStatusList) {
-    this.#studentStatus.status = status;
+  public setStatus(status: string): void {
+    this.#enrollmentStatus = this.statusSchema.parse(status);
   }
 }

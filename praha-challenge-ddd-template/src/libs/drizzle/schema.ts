@@ -53,9 +53,9 @@ export const teamMemberRelations = relations(teamMember, ({ one }) => ({
 export const tasks = pgTable(
   "tasks",
   {
-    taskContentId: varchar("task_content_id").references(() => taskContents.id),
-    taskStatusId: integer("task_status_id").references(() => taskStatus.id),
-    studentId: varchar("student_id").references(() => students.id),
+    taskContentId: varchar("task_content_id").notNull().references(() => taskContents.id),
+    taskStatusId: integer("task_status_id").notNull().references(() => taskStatus.id),
+    studentId: varchar("student_id").notNull().references(() => students.id),
   },
   (table) => {
     return {

@@ -8,9 +8,6 @@ package 生徒集約 {
         生徒Id: string
         名前: string
         メールアドレス: string
-    }
-
-    class "在籍状況" as StudentStatus << (E, green) ValueObject >>  {
         ステータス: string
     }
 }
@@ -27,15 +24,6 @@ package 課題集約 {
     class "課題(Task)" as Task  << (R,red) Entity >> {
         課題Id: string
         生徒Id: string
-        タスクの状態: enum
-    }
-
-    class "課題のコンテンツ" as TaskContent << (E, green) ValueObject >>  {
-        課題のタイトル:string
-        課題のコンテンツ: string
-    }
-
-    class "タスク状況" as TaskStatus << (E, green) ValueObject >>  {
         ステータス: string
     }
 }
@@ -71,7 +59,6 @@ end note
 Task "1..80" -left-> "0..n" Student
 Task "1" *--- "1" TaskContent
 Task "1" *--- "1" TaskStatus
-Student "1" *--- "1" StudentStatus
 Student "0..n" <-left- "1" Team
 
 @enduml

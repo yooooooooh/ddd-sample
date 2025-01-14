@@ -5,8 +5,6 @@ import { z } from "zod";
 export class Team {
   readonly #id: string;
   readonly #name: string;
-  // バリデーションした方が良い？
-  // 多分値オブジェクトにした方が良さそう
   readonly #member: string[];
   readonly MIN_TEAM_MEMBER = 2;
   readonly MAX_TEAM_MEMBER = 4;
@@ -15,7 +13,6 @@ export class Team {
     if (typeof value !== "string") {
       return false;
     }
-
     return /^[a-z]/.test(value);
   });
 
@@ -55,7 +52,7 @@ export class Team {
 
   public addMember(id: string) {
     if (this.#member.includes(id)) {
-      throw new Error("登録済みの生徒です");
+      throw new Error("登録済みの生徒です。");
     }
 
     this.#member.push(id);

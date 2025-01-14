@@ -1,99 +1,82 @@
 import { describe, expect, test } from "vitest";
-import { z } from "zod";
-import { ulid } from "../../libs/ulid";
 import { Task } from "./task";
 
 describe("task", () => {
-  describe("タイトルのみでタスクを作成", () => {
-    const title = "牛乳を買う";
-    const task = new Task({ title });
+  const id = "testId";
+  const studentId = "testStudentId";
+  const status = "未着手";
 
-    test("idがulidで生成される", () => {
-      const generated = task.id;
-      const isUlid = z.string().ulid().safeParse(generated);
-
-      expect(isUlid.success).toBe(true);
-    });
-
-    test("タイトルが設定される", () => {
-      expect(task.title).toBe(title);
-    });
-
-    test("タスクは未完了", () => {
-      expect(task.isDone).toBe(false);
-    });
-  });
-
-  describe("すべてのプロパティを指定してタスクを作成", () => {
-    const id = ulid();
-    const title = "卵を買う";
-    const done = true;
-    const task = new Task({ id, title, done });
+  describe("すべてのプロパティを指定して作成", () => {
+    const task = new Task({id, studentId, status})
 
     test("指定したプロパティが設定される", () => {
       expect(task.id).toBe(id);
-      expect(task.title).toBe(title);
-      expect(task.isDone).toBe(done);
+      expect(task.studentId).toBe(studentId);
+      expect(task.status).toBe(status);
+    });
+
+    test("設定されてるステータス以外だとエラーが発生する", () => {
+      const status = "適当";
+      expect(() => new Task({id, studentId, status})).toThrow();
     });
   });
 
-  describe("タイトルが空文字の場合", () => {
-    const title = "";
-
-    test("エラーが発生する", () => {
-      expect(() => new Task({ title })).toThrow("title must not be empty");
+  describe("ステータスを更新する場合", () => {
+    test("設定されてるステータス以外だとエラーが発生する", () => {
+      const task = new Task({id, studentId, status})
+      expect(() => task.updateStatus("適当")).toThrow();
     });
-  });
 
-  describe("タイトルが100文字を超える場合", () => {
-    const title = "a".repeat(101);
+    test("「未着手」は、「取組中」にのみ変更できる",()=>{
+      const status = "未着手";
+      const task = new Task({id, studentId, status})
+      task.updateStatus("レビュー待ち");
+      task.updateStatus("完了");
+      expect(task.status).toBe(status);
 
-    test("エラーが発生する", () => {
-      expect(() => new Task({ title })).toThrow(
-        "title must be less than 100 characters",
-      );
-    });
-  });
+      task.updateStatus("取組中");
+      expect(task.status).toBe("取組中");
+    })
 
-  describe("タイトルを編集する", () => {
-    const before = "ご飯を炊く";
-    const after = "パスタを茹でる";
-    const task = new Task({ title: before });
-    task.edit(after);
+    test("「取組中」は「レビュー待ち」にのみ変更できる",()=>{
+      const status = "取組中";
+      const task = new Task({id, studentId, status})
+      task.updateStatus("未着手");
+      task.updateStatus("完了");
+      expect(task.status).toBe(status);
 
-    test("タイトルが更新される", () => {
-      expect(task.title).toBe(after);
-    });
-  });
+      task.updateStatus("レビュー待ち");
+      expect(task.status).toBe("レビュー待ち");
+    })
 
-  describe("タイトルを空文字に編集する", () => {
-    const before = "掃除機をかける";
-    const after = "";
-    const task = new Task({ title: before });
+    test("「レビュー待ち」は、「未着手」に変更できない",()=>{
+      const status = "レビュー待ち";
+      const task = new Task({id, studentId, status})
+      task.updateStatus("未着手");
+      expect(task.status).toBe(status);
+    })
 
-    test("エラーが発生する", () => {
-      expect(() => task.edit(after)).toThrow("title must not be empty");
-    });
-  });
+    test("「レビュー待ち」は、「取組中」に変更できる",()=>{
+      const status = "レビュー待ち";
+      const task = new Task({id, studentId, status})
+      task.updateStatus("取組中");
+      expect(task.status).toBe("取組中");
+    })
 
-  describe("タイトルを100文字を超える文字列に編集する", () => {
-    const before = "ご飯を炊く";
-    const after = "a".repeat(101);
-    const task = new Task({ title: before });
+    test("「レビュー待ち」は、「完了」に変更できる",()=>{
+      const status = "レビュー待ち";
+      const task = new Task({id, studentId, status})
+      task.updateStatus("完了");
+      expect(task.status).toBe("完了");
+    })
 
-    test("エラーが発生する", () => {
-      expect(() => task.edit(after)).toThrow(
-        "title must be less than 100 characters",
-      );
-    });
-  });
-
-  describe("タスクを完了にする", () => {
-    const task = new Task({ title: "洗濯機を回す" });
-    task.makeAsDone();
-
-    test("タスクが完了状態になる", () => {
-      expect(task.isDone).toBe(true);
-    });
+    test("「完了」は変更できない",()=>{
+      const status = "完了";
+      const task = new Task({id, studentId, status})
+      task.updateStatus("未着手");
+      task.updateStatus("取組中");
+      task.updateStatus("レビュー待ち");
+      expect(task.status).toBe("完了");
+    })
   });
 });

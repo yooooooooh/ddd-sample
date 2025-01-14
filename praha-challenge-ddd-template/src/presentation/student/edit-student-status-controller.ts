@@ -5,8 +5,8 @@ import { z } from "zod";
 import {
   EditStudentStatusUseCase,
   EditStudentStatusUseCaseNotFoundError,
-} from "../../application/use-case/edit-Student-status-use-case";
-import { PostgresqlStudentRepository } from "../../infrastructure/repository/postgresql-Student-repository";
+} from "../../application/use-case/edit-student-status-use-case";
+import { PostgresqlStudentRepository } from "../../infrastructure/repository/postgresql-student-repository";
 import { PostgresqlTeamRepository } from "../../infrastructure/repository/postgresql-team-repository";
 import { getDatabase } from "../../libs/drizzle/get-database";
 
@@ -19,7 +19,7 @@ type Env = {
 export const editStudentStatusController = new Hono<Env>();
 
 editStudentStatusController.post(
-  "/Students/:id/edit",
+  "/students/:id/edit",
   zValidator("param", z.object({ id: z.string() }), (result, c) => {
     if (!result.success) {
       return c.text("invalid id", 400);

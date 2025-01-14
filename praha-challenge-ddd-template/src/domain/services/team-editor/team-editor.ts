@@ -1,5 +1,5 @@
-import { Student } from "../../aaa/student";
-import { StudentRepositoryInterface } from "../../aaa/student-repository";
+import { Student } from "../../student/student";
+import { StudentRepositoryInterface } from "../../student/student-repository";
 import { Team } from "../../team/team";
 import type { TeamRepositoryInterface } from "../../team/team-repository";
 
@@ -141,7 +141,7 @@ export class TeamEditor {
       id: savedStudent.id,
       name: savedStudent.name,
       mailAddress: savedStudent.mailAddress,
-      status: savedStudent.studentStatus,
+      status: savedStudent.enrollmentStatus,
     };
 
     return assignTeam
@@ -166,7 +166,7 @@ export class TeamEditor {
       id: savedStudent.id,
       name: savedStudent.name,
       mailAddress: savedStudent.mailAddress,
-      status: savedStudent.studentStatus,
+      status: savedStudent.enrollmentStatus,
     };
 
     // 参加者のチームを取得

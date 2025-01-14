@@ -20,7 +20,7 @@ getTaskListController.get(
   zValidator(
     "query",
     z.object({
-      taskContentId: z.string(),
+      taskId: z.string(),
       taskStatus: z.string(),
       page: z.number().optional(),
     }),

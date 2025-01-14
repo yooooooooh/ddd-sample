@@ -17,7 +17,7 @@ export class PostgresqlTaskListQueryService
   public constructor(private readonly database: Database) {}
 
   public async invoke(value: {
-    taskContentId: string;
+    taskId: string;
     taskStatus: string;
     page?: number | undefined;
   }): Promise<TaskListQueryServicePayload> {
@@ -33,7 +33,7 @@ export class PostgresqlTaskListQueryService
       .innerJoin(taskStatus, eq(tasks.taskStatusId, taskStatus.id))
       .where(
         and(
-          eq(taskContents.id, value.taskContentId),
+          eq(taskContents.id, value.taskId),
           eq(taskStatus.name, value.taskStatus),
           eq(students.status, "在籍中")
         )

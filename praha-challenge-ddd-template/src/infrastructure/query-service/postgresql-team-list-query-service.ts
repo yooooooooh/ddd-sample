@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import type { Database } from "../../libs/drizzle/get-database";
-import { Student, team, teamMember } from "../../libs/drizzle/schema";
+import { students, teams, teamMember } from "../../libs/drizzle/schema";
 import {
   TeamListQueryServiceInterface,
   TeamListQueryServicePayload,
@@ -14,17 +14,17 @@ export class PostgresqlTeamListQueryService
   public async invoke(): Promise<TeamListQueryServicePayload> {
     const data = await this.database
       .select({
-        id: team.id,
-        name: team.name,
-        Student: {
-          id: Student.id,
-          name: Student.name,
-          mailAddress: Student.mailAddress,
+        id: teams.id,
+        name: teams.name,
+        student: {
+          id: students.id,
+          name: students.name,
+          mailAddress: students.mailAddress,
         },
       })
       .from(teamMember)
-      .innerJoin(team, eq(teamMember.teamId, team.id))
-      .innerJoin(Student, eq(teamMember.StudentId, Student.id));
+      .innerJoin(teams, eq(teamMember.teamId, teams.id))
+      .innerJoin(students, eq(teamMember.studentId, students.id));
 
     return data.reduce<
       {
@@ -36,13 +36,13 @@ export class PostgresqlTeamListQueryService
           mailAddress: string;
         }[];
       }[]
-    >((acc, { id, name, Student }) => {
+    >((acc, { id, name, student }) => {
       const index = acc.findIndex((obj) => obj.id === id);
 
       if (index === -1) {
-        acc.push({ id: id, team: name, member: [Student] });
+        acc.push({ id: id, team: name, member: [student] });
       } else {
-        acc[index]?.member.push(Student);
+        acc[index]?.member.push(student);
       }
 
       return acc;

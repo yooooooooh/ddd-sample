@@ -16,7 +16,7 @@ type Env = {
 export const createStudentController = new Hono<Env>();
 
 createStudentController.post(
-  "/Students/new",
+  "/students/new",
   zValidator(
     "json",
     z.object({ name: z.string(), mailAddress: z.string().email() }),

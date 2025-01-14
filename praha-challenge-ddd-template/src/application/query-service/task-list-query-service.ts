@@ -12,7 +12,7 @@ export type TaskListQueryServicePayload = {
 
 export interface TaskListQueryServiceInterface {
   invoke: (value: {
-    taskContentId: string;
+    taskId: string;
     taskStatus: string;
     page?: number | undefined;
   }) => Promise<TaskListQueryServicePayload>;

@@ -1,9 +1,8 @@
 import { eq } from "drizzle-orm";
-import { StudentStatus } from "../../domain/aaa/student-status";
 import type { Database } from "../../libs/drizzle/get-database";
 import { students } from "../../libs/drizzle/schema";
-import { Student } from "../../domain/aaa/Student";
-import { StudentRepositoryInterface } from "../../domain/aaa/Student-repository";
+import { Student } from "../../domain/student/student";
+import { StudentRepositoryInterface } from "../../domain/student/student-repository";
 
 export class PostgresqlStudentRepository implements StudentRepositoryInterface {
   public constructor(private readonly database: Database) {}
@@ -15,12 +14,12 @@ export class PostgresqlStudentRepository implements StudentRepositoryInterface {
         id: student.id,
         name: student.name,
         mailAddress: student.mailAddress,
-        status: student.studentStatus,
+        status: student.enrollmentStatus,
       })
       .onConflictDoUpdate({
         target: students.id,
         set: {
-          status: student.studentStatus,
+          status: student.enrollmentStatus,
         },
       })
       .returning({
@@ -38,7 +37,7 @@ export class PostgresqlStudentRepository implements StudentRepositoryInterface {
       id: row.id,
       name: row.name,
       mailAddress: row.mailAddress,
-      studentStatus: new StudentStatus(row.status),
+      enrollmentStatus: row.status,
     });
   }
 
@@ -61,7 +60,7 @@ export class PostgresqlStudentRepository implements StudentRepositoryInterface {
       id: row.id,
       name: row.name,
       mailAddress: row.mailAddress,
-      studentStatus: new StudentStatus(row.status),
+      enrollmentStatus: row.status,
     });
   }
 }

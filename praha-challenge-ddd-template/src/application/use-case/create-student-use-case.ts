@@ -1,5 +1,5 @@
-import { Student } from "../../domain/aaa/student";
-import type { StudentRepositoryInterface } from "../../domain/aaa/student-repository";
+import { Student } from "../../domain/student/student";
+import type { StudentRepositoryInterface } from "../../domain/student/student-repository";
 import { TeamEditor } from "../../domain/services/team-editor/team-editor";
 import type { TeamRepositoryInterface } from "../../domain/team/team-repository";
 
@@ -24,7 +24,7 @@ export type CreateStudentUseCasePayload = {
 
 export class CreateStudentUseCase {
   public constructor(
-    private readonly StudentRepository: StudentRepositoryInterface,
+    private readonly studentRepository: StudentRepositoryInterface,
     private readonly teamRepository: TeamRepositoryInterface
   ) {}
 
@@ -32,7 +32,7 @@ export class CreateStudentUseCase {
     input: CreateStudentUseCaseInput
   ): Promise<CreateStudentUseCasePayload> {
     const teamCreator = new TeamEditor(
-      this.StudentRepository,
+      this.studentRepository,
       this.teamRepository
     );
 

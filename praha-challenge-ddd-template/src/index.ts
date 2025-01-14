@@ -8,7 +8,7 @@ import { addTeamMemberController } from "./presentation/team/add-team-member-con
 import { getTeamListController } from "./presentation/team/get-team-list-controller";
 import { removeTeamMemberController } from "./presentation/team/remove-team-member-controller";
 import { getTaskListController } from "./presentation/task/get-task-list-controller";
-import { editTaskTitleController } from "./presentation/task/edit-task-title-controller";
+import { editTaskController } from "./presentation/task/edit-task-controller";
 
 const app = new Hono();
 
@@ -37,10 +37,10 @@ app.route("/", getTeamListController);
 app.route("/", addTeamMemberController);
 app.route("/", removeTeamMemberController);
 
-// - (生徒)課題の更新（特定の参加者の課題進捗ステータスを変更できること）
-app.route("/", editTaskTitleController);
+// (生徒)課題の更新（特定の参加者の課題進捗ステータスを変更できること）
+app.route("/", editTaskController);
 
-// - (管理者)「特定の課題（複数可能）」が「特定の進捗ステータス」になっている参加者の一覧を、10人単位でページングして取得する
+// (管理者)「特定の課題（複数可能）」が「特定の進捗ステータス」になっている参加者の一覧を、10人単位でページングして取得する
 app.route("/", getTaskListController);
 
 const port = 3000;
